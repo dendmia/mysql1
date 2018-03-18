@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Квест MYSQL(Денисов)</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="styles/default.css">
+
+</head>
+
+<body>
+	<div class="container">
+		<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+			<a class="nav-link" href="#task1">Задание 1</a>
+		</div>
+		<a href=""></a>
+		<section>
+			<h3 id="task1">Задание 1. Создание базы данных для сайта агентства недвижимости</h3>
+			<p>Задание: Спроектировать БД агентства недвижимости: результатом должны стать: схема БД в .png, .mwb и .sql скрипт создания базы, база на сервере в облаке</p>
+			<div>
+				<img class="border border-secondary" src="https://d.radikal.ru/d21/1803/1d/c1922e689208.png" alt="">
+				<div class="my-4">
+					<div>Ссылки на скачивание:</div>
+					<div><a href="https://cloud.mail.ru/public/NBkA/QFWNzcxTe">quest_bl_db.mwb</a></div>
+					<div><a href="https://cloud.mail.ru/public/GrEa/1LpTfHud5">quest_bl_db.pdf</a></div>
+				</div>
+
+				<pre class="border border-success"><code class="SQL">
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+USE `mydb` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`estate_objects` (
+  `idreal estate_objects` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `type` ENUM('дом', 'квартира', 'склад', 'офис', 'гараж', 'дача') NULL,
+  `area` SMALLINT UNSIGNED NULL DEFAULT 0,
+  `adress` VARCHAR(100) NULL,
+  `post_index` MEDIUMINT UNSIGNED NULL,
+  `rooms` TINYINT UNSIGNED NULL DEFAULT 0,
+  `description` VARCHAR(3000) NULL,
+  `price` VARCHAR(45) NULL,
+  PRIMARY KEY (`idreal estate_objects`),
+  UNIQUE INDEX `idreal estate-objects_UNIQUE` (`idreal estate_objects` ASC))
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`customers` (
+  `idcustomers` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `first_name` VARCHAR(33) NOT NULL DEFAULT 'Фамилия',
+  `last_name` VARCHAR(33) NOT NULL DEFAULT 'Имя',
+  `age` TINYINT UNSIGNED NULL,
+  `gender` ENUM('male', 'female') NULL,
+  `date_of_birth` DATE NULL,
+  `phone_number` CHAR(10) NOT NULL DEFAULT 'Телефон',
+  `email` VARCHAR(45) NOT NULL DEFAULT 'e-mail',
+  `estate_objects_idreal estate_objects` INT NOT NULL,
+  PRIMARY KEY (`idcustomers`),
+  UNIQUE INDEX `idcustomers_UNIQUE` (`idcustomers` ASC),
+  INDEX `fk_customers_estate_objects_idx` (`estate_objects_idreal estate_objects` ASC),
+  UNIQUE INDEX `phone_number_UNIQUE` (`phone_number` ASC),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC),
+  CONSTRAINT `fk_customers_estate_objects`
+    FOREIGN KEY (`estate_objects_idreal estate_objects`)
+    REFERENCES `mydb`.`estate_objects` (`idreal estate_objects`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+</code></pre>
+			</div>
+		</section>
+	</div>
+	<script src="highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+
+</html>
