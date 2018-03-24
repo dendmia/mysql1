@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`estate_objects` (
 ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`customers` (
-  `idcustomers` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idcustomers` INT UNSIGNED NOT NULL,
   `first_name` VARCHAR(33) NOT NULL DEFAULT 'Фамилия',
   `last_name` VARCHAR(33) NOT NULL DEFAULT 'Имя',
   `age` TINYINT UNSIGNED NULL,
@@ -58,18 +58,20 @@ CREATE TABLE IF NOT EXISTS `mydb`.`customers` (
   `date_of_birth` DATE NULL,
   `phone_number` CHAR(10) NOT NULL DEFAULT 'Телефон',
   `email` VARCHAR(45) NOT NULL DEFAULT 'e-mail',
-  `estate_objects_idreal estate_objects` INT NOT NULL,
+  `estate_objects_idreal estate_objects` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`idcustomers`),
   UNIQUE INDEX `idcustomers_UNIQUE` (`idcustomers` ASC),
   INDEX `fk_customers_estate_objects_idx` (`estate_objects_idreal estate_objects` ASC),
   UNIQUE INDEX `phone_number_UNIQUE` (`phone_number` ASC),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC),
+  UNIQUE INDEX `estate_objects_idreal estate_objects_UNIQUE` (`estate_objects_idreal estate_objects` ASC),
   CONSTRAINT `fk_customers_estate_objects`
     FOREIGN KEY (`estate_objects_idreal estate_objects`)
     REFERENCES `mydb`.`estate_objects` (`idreal estate_objects`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
