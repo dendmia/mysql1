@@ -81,7 +81,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 		</section>
 <!--------------------------------------------------------------------------->
 		<section>
-			<h2 id="task2">Задание 2.</h2>
+			<h2 class="mt-5" id="task2">Задание 2.</h2>
 			<p>Задание: Написать вопросы на вставку данных в таблицы: insert, load data. Вставить данные в разработанную БД. Данные должны быть максимально приближены к реальным.</p>
 			<div>
 				<h3>Решение:</h3>
@@ -95,20 +95,24 @@ rooms = '3', description = 'Большая престижная квартира
 							<img src="https://a.radikal.ru/a03/1803/4a/d0b9f592bc0c.png" alt="">
 								<img class="border border-secondary" src="#" alt="">
 								
-				<h4>Запрос на вставку данных LOAD DATA</h4>
-				<p>Для начала спрашиваем в какую в какую папку нужно положить .csv</p>
+				<h4 class="mt-3">Запрос на вставку данных LOAD DATA</h4>
+				<p>Создаем .csv в котором заполняем поля соответственно таблице в которую будем будем вставлять. Перекодируем из windows-1251 в UTF-8</p>
+				<img class="border border-secondary" src="https://c.radikal.ru/c08/1803/ef/aeec61ec13ee.png" alt="">
+				
+				<p class="mt-4">Cпрашиваем у mysql в какую в какую папку нужно положить .csv</p>
 				<pre class="border border-success"><code class="SQL">SHOW VARIABLES LIKE "secure_file_priv";</code></pre>
 				<img src="https://c.radikal.ru/c08/1803/00/69b71cc6e3c3.png" alt="">
-				<p>Пишем запрос:</p>
+				<p class="mt-4">Пишем запрос:</p>
 				<pre class="border border-success"><code class="SQL">
 LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/customers.csv'
 INTO TABLE customers
-FIELDS TERMINATED BY ';'
+FIELDS TERMINATED BY ';' -- Excel делит ячейки не запятой а точкой с запятой
 LINES TERMINATED BY '\r\n'
-IGNORE 1 LINES;</code></pre>
+IGNORE 1 ROWS;
+			</code></pre>
 				
 				<h4>Результат:</h4>
-								<img class="border border-secondary" src="#" alt="">
+								<img class="border border-secondary" src="https://b.radikal.ru/b29/1803/de/2ec23a14ee38.png" alt="">
 			</div>
 		</section>
 	</div>
