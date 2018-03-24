@@ -95,11 +95,17 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 								<img class="border border-secondary" src="#" alt="">
 								
 				<h4>Запрос на вставку данных LOAD DATA</h4>
-				<pre class="border border-success"> <code class="SQL">
-					
-					
-					
-				</code></pre>
+				<p>Для начала спрашиваем в какую в какую папку нужно положить .csv</p>
+				<pre class="border border-success"><code class="SQL">SHOW VARIABLES LIKE "secure_file_priv";</code></pre>
+				<img src="https://c.radikal.ru/c08/1803/00/69b71cc6e3c3.png" alt="">
+				<p>Пишем запрос:</p>
+				<pre class="border border-success"><code class="SQL">
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/customers.csv'
+INTO TABLE customers
+FIELDS TERMINATED BY ';'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 LINES;</code></pre>
+				
 				<h4>Результат:</h4>
 								<img class="border border-secondary" src="#" alt="">
 			</div>
