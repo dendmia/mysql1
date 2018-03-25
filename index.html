@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<title>Квест MYSQL(Денисов)</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<link rel="stylesheet" href="styles/default.css">
+	<link rel="stylesheet" href="styles/default.css">
 
 </head>
 
@@ -14,13 +14,14 @@
 		<div class="nav flex-column nav-pills fixed-top" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 			<a class="nav-link" href="#task1">Задание 1</a>
 			<a class="nav-link" href="#task2">Задание 2</a>
+			<a class="nav-link" href="#task3">Задание 3</a>
 		</div>
 		<a href=""></a>
 		<section>
 			<h2 id="task1">Задание 1. Создание базы данных для сайта агентства недвижимости</h2>
 			<p>Задание: Спроектировать БД агентства недвижимости: результатом должны стать: схема БД в .png, .mwb и .sql скрипт создания базы, база на сервере в облаке</p>
 			<div>
-			<h3>Решение:</h3>
+				<h3>Решение:</h3>
 				<img class="border border-secondary" src="https://d.radikal.ru/d21/1803/1d/c1922e689208.png" alt="">
 				<div class="my-4">
 					<div>Ссылки на скачивание:</div>
@@ -79,7 +80,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 </code></pre>
 			</div>
 		</section>
-<!--------------------------------------------------------------------------->
+		<!--------------------------------------------------------------------------->
 		<section>
 			<h2 class="mt-5" id="task2">Задание 2.</h2>
 			<p>Задание: Написать вопросы на вставку данных в таблицы: insert, load data. Вставить данные в разработанную БД. Данные должны быть максимально приближены к реальным.</p>
@@ -92,13 +93,13 @@ SET type = 'квартира', area = '77' , adress = 'Москва', post_index
 rooms = '3', description = 'Большая престижная квартира в сталинке', price = '30000000';
 				</code></pre>
 				<h4>Результат:</h4>
-							<img src="https://a.radikal.ru/a03/1803/4a/d0b9f592bc0c.png" alt="">
-								<img class="border border-secondary" src="#" alt="">
-								
+				<img src="https://a.radikal.ru/a03/1803/4a/d0b9f592bc0c.png" alt="">
+				<img class="border border-secondary" src="#" alt="">
+
 				<h4 class="mt-3">Запрос на вставку данных LOAD DATA</h4>
 				<p>Создаем .csv в котором заполняем поля соответственно таблице в которую будем будем вставлять. Перекодируем из windows-1251 в UTF-8</p>
 				<img class="border border-secondary" src="https://c.radikal.ru/c08/1803/ef/aeec61ec13ee.png" alt="">
-				
+
 				<p class="mt-4">Cпрашиваем у mysql в какую в какую папку нужно положить .csv</p>
 				<pre class="border border-success"><code class="SQL">SHOW VARIABLES LIKE "secure_file_priv";</code></pre>
 				<img src="https://c.radikal.ru/c08/1803/00/69b71cc6e3c3.png" alt="">
@@ -110,14 +111,45 @@ FIELDS TERMINATED BY ';' -- Excel делит ячейки не запятой а
 LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS;
 			</code></pre>
-				
+
 				<h4>Результат:</h4>
-								<img class="border border-secondary" src="https://b.radikal.ru/b29/1803/de/2ec23a14ee38.png" alt="">
+				<img class="border border-secondary" src="https://b.radikal.ru/b29/1803/de/2ec23a14ee38.png" alt="">
 			</div>
 		</section>
+		<section>
+			<h2 class="mt-5" id="task3">Задание 3.</h2>
+			<p>Задание. Написать запросы на выборку из таблиц базы: 3.1 все варианты select из методички по курсу 3.2 запросы на объединение таблиц (JOIN) между сочетаниями по две, три таблицы (не менее 10 штук) Примечание: Запросы должны гибко выбирать данные из базы</p>
+			<h3>Решение:</h3>
+			<h4>Запрос на выборку данных SELECT</h4>
+
+			<pre class="border border-success">
+				<code class="SQL">
+
+		
+				</code>
+			</pre>
+
+			<h3>Решение:</h3>
+			<h4>Запрос на объединение таблиц JOIN</h4>
+
+			<pre class="border border-success">
+		    <code class="SQL">
+
+		
+				</code>
+			</pre>
+
+		</section>
 	</div>
+
+
+
+
 	<script src="highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
+	<script>
+		hljs.initHighlightingOnLoad();
+
+	</script>
 </body>
 
 </html>
