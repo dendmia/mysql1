@@ -6,22 +6,27 @@
 	<title>Квест MYSQL(Денисов)</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link rel="stylesheet" href="styles/default.css">
+	<style>
+		p {padding-top: 2.5em;}
+		h4 {padding-top: 3em;}
+	</style>
 
 </head>
 
 <body>
 	<div class="container">
 		<div class="nav flex-column nav-pills fixed-top" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-			<a class="nav-link" href="#task1">Задание 1</a>
-			<a class="nav-link" href="#task2">Задание 2</a>
-			<a class="nav-link" href="#task3">Задание 3</a>
+			<a class="nav-link" href="#task1">Задание 1 CREAT</a>
+			<a class="nav-link" href="#task2">Задание 2 INSERT</a>
+			<a class="nav-link" href="#task3.1">Задание 3.1 SELECT</a>
+			<a class="nav-link" href="#task3.2">Задание 3.2 JOHN</a>
 		</div>
 		<a href=""></a>
 		<section>
 			<h2 id="task1">Задание 1. Создание базы данных для сайта агентства недвижимости</h2>
 			<p>Задание: Спроектировать БД агентства недвижимости: результатом должны стать: схема БД в .png, .mwb и .sql скрипт создания базы, база на сервере в облаке</p>
 			<div>
-				<h3>Решение:</h3>
+				
 				<img class="border border-secondary" src="https://d.radikal.ru/d21/1803/1d/c1922e689208.png" alt="">
 				<div class="my-4">
 					<div>Ссылки на скачивание:</div>
@@ -85,14 +90,14 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 			<h2 class="mt-5" id="task2">Задание 2.</h2>
 			<p>Задание: Написать вопросы на вставку данных в таблицы: insert, load data. Вставить данные в разработанную БД. Данные должны быть максимально приближены к реальным.</p>
 			<div>
-				<h3>Решение:</h3>
+				
 				<h4>Запрос на вставку данных INSERT</h4>
 				<pre class="border border-success"> <code class="SQL">
 INSERT INTO estate_objects
 SET type = 'квартира', area = '77' , adress = 'Москва', post_index = '142222',
 rooms = '3', description = 'Большая престижная квартира в сталинке', price = '30000000';
 				</code></pre>
-				<h4>Результат:</h4>
+				
 				<img src="https://a.radikal.ru/a03/1803/4a/d0b9f592bc0c.png" alt="">
 				<img class="border border-secondary" src="#" alt="">
 
@@ -104,34 +109,165 @@ rooms = '3', description = 'Большая престижная квартира
 				<pre class="border border-success"><code class="SQL">SHOW VARIABLES LIKE "secure_file_priv";</code></pre>
 				<img src="https://c.radikal.ru/c08/1803/00/69b71cc6e3c3.png" alt="">
 				<p class="mt-4">Пишем запрос:</p>
-				<pre class="border border-success"><code class="SQL">
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/customers.csv'
+				<pre class="border border-success"><code class="SQL">LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/customers.csv'
 INTO TABLE customers
 FIELDS TERMINATED BY ';' -- Excel делит ячейки не запятой а точкой с запятой
 LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS;
 			</code></pre>
 
-				<h4>Результат:</h4>
+				
 				<img class="border border-secondary" src="https://b.radikal.ru/b29/1803/de/2ec23a14ee38.png" alt="">
 			</div>
 		</section>
 		<section>
-			<h2 class="mt-5" id="task3">Задание 3.</h2>
-			<p>Задание. Написать запросы на выборку из таблиц базы: 3.1 все варианты select из методички по курсу 3.2 запросы на объединение таблиц (JOIN) между сочетаниями по две, три таблицы (не менее 10 штук) Примечание: Запросы должны гибко выбирать данные из базы</p>
-			<h3>Решение:</h3>
-			<h4>Запрос на выборку данных SELECT</h4>
+			<h2 class="mt-5" id="task3.1">Задание 3.1</h2>
+			<p>Задание. Написать запросы на выборку из таблиц базы:
 
-			<pre class="border border-success">
-				<code class="SQL">
+			</p>
+			<ul>
+				<li>3.1 все варианты select из методички по курсу</li>
+				<li>3.2 запросы на объединение таблиц (JOIN) между сочетаниями по две, три таблицы (не менее 10 штук) Примечание: Запросы должны гибко выбирать данные из базы</li>
+			</ul>
+			
+			<h4>Запросы на выборку данных SELECT</h4>
+			<p>C помощью SELECT можно осуществлять маематические процедуры не затрагивая существующие таблицы, при этом оператор SELECT всё возврвщает в виде таблицы:</p>
 
+			<pre class="border border-success"><code class="SQL">SELECT 2+2*2;</code></pre>
+			<img src="https://b.radikal.ru/b14/1803/f2/74dc0af6a316.png" alt="">
+
+			<p>Можно отобразить все значения в определенной таблице используя *:</p>
+			<pre class="border border-success"><code class="SQL">SELECT * FROM estate_objects;</code></pre>
+			<img src="https://b.radikal.ru/b24/1803/95/4f00e08e663f.png" alt="">
+
+			<p>Можно отобразить несколько столбцов из определенной таблицы:</p>
+			<pre class="border border-success"><code class="SQL">SELECT last_name,date_of_birth FROM customers;</code></pre>
+			<img src="https://a.radikal.ru/a31/1803/d0/40bcf9abc741.png" alt="">
+
+			<p>Можно отобразить несколько неповторяющихся значений из определенной таблицы:</p>
+			<pre class="border border-success"><code class="SQL">SELECT DISTINCT age FROM customers;</code></pre>
+			<img src="https://b.radikal.ru/b16/1804/d2/e9741c60fcb8.png" alt="">
+
+			<p>Можем осуществить математическую операцию со всеми ячейками определенного столбца таблицы</p>
+			<pre class="border border-success"><code class="SQL">SELECT age +10 FROM customers;</code></pre>
+			<img src="https://d.radikal.ru/d08/1804/d8/d3b4588e2f75.png" alt="">
+			
+			<p>Можем использовать клаузулу ORDER например отсортировав клиентов в алфавитном порядке отобразив сначала фамилию, а потом имя</p>
+			<pre class="border border-success"><code class="SQL">SELECT last_name,first_name
+FROM customers
+ORDER BY last_name;</code></pre>
+<img src="https://a.radikal.ru/a23/1804/a4/a1adb9f30aba.png" alt="">
+			
+			<p>Добавляем DESC после имени колонки и получаем выборку в обратной алфавитному порядку</p>
+			<pre class="border border-success"><code class="SQL">SELECT last_name,first_name
+FROM customers
+ORDER BY last_name DESC;			
+			</code></pre>
+			<img src="https://d.radikal.ru/d12/1804/35/aa892e5b3401.png" alt="">
+			
+			<p>Делаем запрос с обратной сортировкой по возрасту и фамилии</p>
+			<pre class="border border-success"><code class="SQL">SELECT * FROM customers ORDER BY age DESC, last_name;</code></pre>		
+			<img src="https://a.radikal.ru/a19/1804/46/9b4f6df28ec3.png" alt="">
 		
-				</code>
-			</pre>
+			<p> Для выборки и сортировки в случайном порядке используем <b>ORDER BY RAND()</b>; </p>
+			<pre class="border border-success"><code class="SQL">SELECT last_name,first_name 
+FROM customers 
+ORDER BY rand(); </code></pre>
+			<img src="https://a.radikal.ru/a07/1804/de/52386b71b6e7.png" alt="">		
+		
+			<p>Вместо названий колонок можно использовать их порядковые номера. Это не рекомендуется, так как порядкок колонок может смениться и тогда сортировка собьется.</p>
+			<pre class="border border-success"><code class="SQL">SELECT * FROM customers 
+ORDER BY 3,2; </code></pre>
+			<img src="https://b.radikal.ru/b03/1804/bc/204160ca2243.png" alt="">			
+		
+			<p>Для ограничения выборки используем <b>LIMIT</b>, например сделаем выборку 3 случайных клиентов</p>
+			<pre class="border border-success"><code class="SQL">SELECT last_name,first_name 
+FROM customers 
+ORDER BY rand() 
+LIMIT 3; </code></pre>		
+			<img src="https://c.radikal.ru/c35/1804/39/ad490d2539e4.png" alt="">
+			
+			<p>Что бы сделать выборку 5 клиентов начиная например с 7го:</p>
+			<pre class="border border-success"><code class="SQL">SELECT last_name,first_name 
+FROM customers 
+ORDER BY last_name 
+LIMIT 7,5; </code></pre>
+			<img src="https://b.radikal.ru/b28/1804/a6/ac0efb42789c.png" alt="">	
 
-			<h3>Решение:</h3>
-			<h4>Запрос на объединение таблиц JOIN</h4>
+			<p>Для постановки фильтров выборки можно использовать предикат WHERE. Например сделаем выборку всех клиентов срарше 29 лет. При этом происходит проверка каждой записи и выборка только нужных</p>
+			<pre class="border border-success"><code class="SQL">SELECT last_name,age
+FROM customers
+WHERE age >29;</code></pre>
+			<p>Для выборки всех клиентов в возрасте от 18 до 24 лет используем <b>BETWEEN</b></p>
+			<pre class="border border-success"><code class="SQL">SELECT * 
+FROM customers 
+WHERE age BETWEEN 18 AND 24;</code></pre>
+			<img src="https://c.radikal.ru/c05/1804/a2/3ded24679552.png" alt="">
+		
+			
+			<p>Для выборки всех клиентов c фамилией начинающейся на К используем <b>LIKE</b> и знак <b>%</b></p>
+			<pre class="border border-success"><code class="SQL">SELECT * 
+FROM customers 
+WHERE last_name LIKE 'К%';</code></pre>
+			<img src="https://c.radikal.ru/c18/1804/ee/0cad87b7aea6.png" alt="">
 
+			<p>Для выборки всех клиентов c фамилией <b>не</b> не заканчивающихся на <b>ов</b> используем <b>NOT LIKE</b></p>
+			<pre class="border border-success"><code class="SQL">SELECT * 
+FROM customers 
+WHERE last_name NOT LIKE '%ов';</code></pre>
+			<img src="https://a.radikal.ru/a38/1804/7d/61ad4351a9bc.png" alt="">
+			
+			<p>Для того чтобы выбрать всех клиентов с именами Александр и Владимир используем <b>IN</b> </p>
+			<pre class="border border-success"><code class="SQL">SELECT * 
+FROM customers
+WHERE first_name IN ('Александр','Владимир');</code></pre>
+			<img src="https://b.radikal.ru/b01/1804/9e/e6803d6cdb42.png" alt="">
+			
+			<p>Для того чтобы выбрать всех остальных клиентов используем <b>NOT IN</b> </p>
+			<pre class="border border-success"><code class="SQL">SELECT * 
+FROM customers
+WHERE first_name NOT IN ('Александр','Владимир');</code></pre>
+			<img src="https://a.radikal.ru/a38/1804/6b/9ecf2c7a3505.png" alt="">
+			
+			<p>Для определения среднего возраста клиентов используем <b>агрегирующую функцию AVG</b></p>
+			<pre class="border border-success"><code class="SQL">SELECT AVG(age) FROM customers;</code></pre>
+			<img src="https://c.radikal.ru/c25/1804/dd/0274d879a8ec.png" alt="">
+			
+
+			<p>Для возврата количества строк в таблице используем агрегирующую функцию <b>COUNT</b>. C функцией COUNT нет смысла указывать конкретную колонку, т.к. в реляционной таблице количество рядов во всех колонках одинаковое, поэтому используем всегда <b>*</b></p>
+			<pre class="border border-success"><code class="SQL">SELECT COUNT(*) FROM customers;</code></pre>
+			<img src="https://d.radikal.ru/d28/1804/10/055e6a4bbbef.png" alt="">
+			
+		
+			<p> Чтобы получить список фамилий клиентов через запятую используем групповую конкатенацию <b>GROUP_CONCAT</b> </p>
+			<pre class="border border-success"><code class="SQL">SELECT GROUP_CONCAT(last_name) FROM customers;</code></pre>
+			<img src="https://d.radikal.ru/d05/1804/98/edee9fe56b17.png" alt="">
+			
+			<p> Что бы узнать максимальный возраст нашего клиента используем <b>MAX</b> </p>
+			<pre class="border border-success"><code class="SQL">SELECT MAX(age) FROM customers;</code></pre>
+			<img src="https://b.radikal.ru/b18/1804/2b/c892683c5404.png" alt="">
+
+			<p> Что бы узнать суммарный возраст наших клиентов используем <b>MAX</b> </p>
+			<pre class="border border-success"><code class="SQL">SELECT SUM(age) FROM customers;</code></pre>
+			<img src="https://c.radikal.ru/c15/1804/cc/e7e0576588be.png" alt="">
+			
+			<p>Для того чтобы сгруппировать наших клиентов по фамилии, а затем по возрасту используем <b>GROUP BY</b></p>
+			<pre class="border border-success"><code class="SQL">SELECT last_name, age 
+FROM customers
+GROUP BY last_name, age;</code></pre>
+			<img src="https://c.radikal.ru/c35/1804/0d/e3eed01b396d.png" alt="">		
+			
+			<p><b>Настойчиво рекомендуется</b> писать предикаты в следующем порядке, так как именно в этом порядке они выполняются на сервере:</p>
+			<pre class="border border-success"><code class="SQL">--WHERE
+--GROUP
+--HAVING
+--ORDER
+--LIMIT</code></pre>
+			
+		
+
+			<h4 id="task3.2">Запрос на объединение таблиц JOIN</h4>
+			<p></p>
 			<pre class="border border-success">
 		    <code class="SQL">
 
@@ -148,7 +284,6 @@ IGNORE 1 ROWS;
 	<script src="highlight.pack.js"></script>
 	<script>
 		hljs.initHighlightingOnLoad();
-
 	</script>
 </body>
 
