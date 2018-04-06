@@ -385,7 +385,7 @@ estate_objects.description, estate_objects.price, objectCity.City
 	    	FULL OUTER JOIN objectCity
 	    	ON estate_objects.cityID = objectCity.city;
 		    </code></pre>
-		    <img src="http://i.yapx.ru/BMP5y.png" alt="">
+		    <img class="img-fluid" src="http://i.yapx.ru/BMP5y.png" alt="">
 <p>(!) В MySQL нет полного внешнего объединения. Прийдетсяписать через левые:</p>
 
 
@@ -393,7 +393,7 @@ estate_objects.description, estate_objects.price, objectCity.City
 UNION
 SELECT * FROM objectCity  LEFT JOIN estate_objects ON estate_objects.cityID = objectCity.city;
 		    </code></pre>
-<img src="http://i.yapx.ru/BMP6v.png" alt="">
+<img class="img-fluid" src="http://i.yapx.ru/BMP6v.png" alt="">
 
 <p>Кросс объединение делается с помощью <b>CROSS JOIN</b>. В результате каждой записи левой таблицы ставятся в соответствие все записи правой. Нет условия связи. </p>
 	<pre class="border border-success"><code class="SQL">SELECT *
