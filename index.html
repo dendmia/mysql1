@@ -7,8 +7,13 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link rel="stylesheet" href="styles/default.css">
 	<style>
-		p {padding-top: 2.5em;}
-		h4 {padding-top: 3em;}
+		p {
+			padding-top: 2.5em;
+		}
+
+		h4 {
+			padding-top: 3em;
+		}
 	</style>
 
 </head>
@@ -26,7 +31,7 @@
 			<h2 id="task1">Задание 1. Создание базы данных для сайта агентства недвижимости</h2>
 			<p>Задание: Спроектировать БД агентства недвижимости: результатом должны стать: схема БД в .png, .mwb и .sql скрипт создания базы, база на сервере в облаке</p>
 			<div>
-				
+
 				<img class="border border-secondary" src="https://d.radikal.ru/d21/1803/1d/c1922e689208.png" alt="">
 				<div class="my-4">
 					<div>Ссылки на скачивание:</div>
@@ -90,14 +95,14 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 			<h2 class="mt-5" id="task2">Задание 2.</h2>
 			<p>Задание: Написать вопросы на вставку данных в таблицы: insert, load data. Вставить данные в разработанную БД. Данные должны быть максимально приближены к реальным.</p>
 			<div>
-				
+
 				<h4>Запрос на вставку данных INSERT</h4>
 				<pre class="border border-success"> <code class="SQL">
 INSERT INTO estate_objects
 SET type = 'квартира', area = '77' , adress = 'Москва', post_index = '142222',
 rooms = '3', description = 'Большая престижная квартира в сталинке', price = '30000000';
 				</code></pre>
-				
+
 				<img src="https://a.radikal.ru/a03/1803/4a/d0b9f592bc0c.png" alt="">
 				<img class="border border-secondary" src="#" alt="">
 
@@ -116,7 +121,7 @@ LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS;
 			</code></pre>
 
-				
+
 				<img class="border border-secondary" src="https://b.radikal.ru/b29/1803/de/2ec23a14ee38.png" alt="">
 			</div>
 		</section>
@@ -129,7 +134,7 @@ IGNORE 1 ROWS;
 				<li>3.1 все варианты select из методички по курсу</li>
 				<li>3.2 запросы на объединение таблиц (JOIN) между сочетаниями по две, три таблицы (не менее 10 штук) Примечание: Запросы должны гибко выбирать данные из базы</li>
 			</ul>
-			
+
 			<h4>Запросы на выборку данных SELECT</h4>
 			<p>C помощью SELECT можно осуществлять маематические процедуры не затрагивая существующие таблицы, при этом оператор SELECT всё возврвщает в виде таблицы:</p>
 
@@ -151,48 +156,48 @@ IGNORE 1 ROWS;
 			<p>Можем осуществить математическую операцию со всеми ячейками определенного столбца таблицы</p>
 			<pre class="border border-success"><code class="SQL">SELECT age +10 FROM customers;</code></pre>
 			<img src="https://d.radikal.ru/d08/1804/d8/d3b4588e2f75.png" alt="">
-			
+
 			<p>Можем использовать клаузулу ORDER например отсортировав клиентов в алфавитном порядке отобразив сначала фамилию, а потом имя</p>
 			<pre class="border border-success"><code class="SQL">SELECT last_name,first_name
 FROM customers
 ORDER BY last_name;</code></pre>
-<img src="https://a.radikal.ru/a23/1804/a4/a1adb9f30aba.png" alt="">
-			
+			<img src="https://a.radikal.ru/a23/1804/a4/a1adb9f30aba.png" alt="">
+
 			<p>Добавляем DESC после имени колонки и получаем выборку в обратной алфавитному порядку</p>
 			<pre class="border border-success"><code class="SQL">SELECT last_name,first_name
 FROM customers
 ORDER BY last_name DESC;			
 			</code></pre>
 			<img src="https://d.radikal.ru/d12/1804/35/aa892e5b3401.png" alt="">
-			
+
 			<p>Делаем запрос с обратной сортировкой по возрасту и фамилии</p>
-			<pre class="border border-success"><code class="SQL">SELECT * FROM customers ORDER BY age DESC, last_name;</code></pre>		
+			<pre class="border border-success"><code class="SQL">SELECT * FROM customers ORDER BY age DESC, last_name;</code></pre>
 			<img src="https://a.radikal.ru/a19/1804/46/9b4f6df28ec3.png" alt="">
-		
+
 			<p> Для выборки и сортировки в случайном порядке используем <b>ORDER BY RAND()</b>; </p>
 			<pre class="border border-success"><code class="SQL">SELECT last_name,first_name 
 FROM customers 
 ORDER BY rand(); </code></pre>
-			<img src="https://a.radikal.ru/a07/1804/de/52386b71b6e7.png" alt="">		
-		
+			<img src="https://a.radikal.ru/a07/1804/de/52386b71b6e7.png" alt="">
+
 			<p>Вместо названий колонок можно использовать их порядковые номера. Это не рекомендуется, так как порядкок колонок может смениться и тогда сортировка собьется.</p>
 			<pre class="border border-success"><code class="SQL">SELECT * FROM customers 
 ORDER BY 3,2; </code></pre>
-			<img src="https://b.radikal.ru/b03/1804/bc/204160ca2243.png" alt="">			
-		
+			<img src="https://b.radikal.ru/b03/1804/bc/204160ca2243.png" alt="">
+
 			<p>Для ограничения выборки используем <b>LIMIT</b>, например сделаем выборку 3 случайных клиентов</p>
 			<pre class="border border-success"><code class="SQL">SELECT last_name,first_name 
 FROM customers 
 ORDER BY rand() 
-LIMIT 3; </code></pre>		
+LIMIT 3; </code></pre>
 			<img src="https://c.radikal.ru/c35/1804/39/ad490d2539e4.png" alt="">
-			
+
 			<p>Что бы сделать выборку 5 клиентов начиная например с 7го:</p>
 			<pre class="border border-success"><code class="SQL">SELECT last_name,first_name 
 FROM customers 
 ORDER BY last_name 
 LIMIT 7,5; </code></pre>
-			<img src="https://b.radikal.ru/b28/1804/a6/ac0efb42789c.png" alt="">	
+			<img src="https://b.radikal.ru/b28/1804/a6/ac0efb42789c.png" alt="">
 
 			<p>Для постановки фильтров выборки можно использовать предикат WHERE. Например сделаем выборку всех клиентов срарше 29 лет. При этом происходит проверка каждой записи и выборка только нужных</p>
 			<pre class="border border-success"><code class="SQL">SELECT last_name,age
@@ -203,8 +208,8 @@ WHERE age >29;</code></pre>
 FROM customers 
 WHERE age BETWEEN 18 AND 24;</code></pre>
 			<img src="https://c.radikal.ru/c05/1804/a2/3ded24679552.png" alt="">
-		
-			
+
+
 			<p>Для выборки всех клиентов c фамилией начинающейся на К используем <b>LIKE</b> и знак <b>%</b></p>
 			<pre class="border border-success"><code class="SQL">SELECT * 
 FROM customers 
@@ -216,33 +221,33 @@ WHERE last_name LIKE 'К%';</code></pre>
 FROM customers 
 WHERE last_name NOT LIKE '%ов';</code></pre>
 			<img src="https://a.radikal.ru/a38/1804/7d/61ad4351a9bc.png" alt="">
-			
+
 			<p>Для того чтобы выбрать всех клиентов с именами Александр и Владимир используем <b>IN</b> </p>
 			<pre class="border border-success"><code class="SQL">SELECT * 
 FROM customers
 WHERE first_name IN ('Александр','Владимир');</code></pre>
 			<img src="https://b.radikal.ru/b01/1804/9e/e6803d6cdb42.png" alt="">
-			
+
 			<p>Для того чтобы выбрать всех остальных клиентов используем <b>NOT IN</b> </p>
 			<pre class="border border-success"><code class="SQL">SELECT * 
 FROM customers
 WHERE first_name NOT IN ('Александр','Владимир');</code></pre>
 			<img src="https://a.radikal.ru/a38/1804/6b/9ecf2c7a3505.png" alt="">
-			
+
 			<p>Для определения среднего возраста клиентов используем <b>агрегирующую функцию AVG</b></p>
 			<pre class="border border-success"><code class="SQL">SELECT AVG(age) FROM customers;</code></pre>
 			<img src="https://c.radikal.ru/c25/1804/dd/0274d879a8ec.png" alt="">
-			
+
 
 			<p>Для возврата количества строк в таблице используем агрегирующую функцию <b>COUNT</b>. C функцией COUNT нет смысла указывать конкретную колонку, т.к. в реляционной таблице количество рядов во всех колонках одинаковое, поэтому используем всегда <b>*</b></p>
 			<pre class="border border-success"><code class="SQL">SELECT COUNT(*) FROM customers;</code></pre>
 			<img src="https://d.radikal.ru/d28/1804/10/055e6a4bbbef.png" alt="">
-			
-		
+
+
 			<p> Чтобы получить список фамилий клиентов через запятую используем групповую конкатенацию <b>GROUP_CONCAT</b> </p>
 			<pre class="border border-success"><code class="SQL">SELECT GROUP_CONCAT(last_name) FROM customers;</code></pre>
 			<img src="https://d.radikal.ru/d05/1804/98/edee9fe56b17.png" alt="">
-			
+
 			<p> Что бы узнать максимальный возраст нашего клиента используем <b>MAX</b> </p>
 			<pre class="border border-success"><code class="SQL">SELECT MAX(age) FROM customers;</code></pre>
 			<img src="https://b.radikal.ru/b18/1804/2b/c892683c5404.png" alt="">
@@ -250,30 +255,135 @@ WHERE first_name NOT IN ('Александр','Владимир');</code></pre>
 			<p> Что бы узнать суммарный возраст наших клиентов используем <b>MAX</b> </p>
 			<pre class="border border-success"><code class="SQL">SELECT SUM(age) FROM customers;</code></pre>
 			<img src="https://c.radikal.ru/c15/1804/cc/e7e0576588be.png" alt="">
-			
+
 			<p>Для того чтобы сгруппировать наших клиентов по фамилии, а затем по возрасту используем <b>GROUP BY</b></p>
 			<pre class="border border-success"><code class="SQL">SELECT last_name, age 
 FROM customers
 GROUP BY last_name, age;</code></pre>
-			<img src="https://c.radikal.ru/c35/1804/0d/e3eed01b396d.png" alt="">		
-			
+			<img src="https://c.radikal.ru/c35/1804/0d/e3eed01b396d.png" alt="">
+
 			<p><b>Настойчиво рекомендуется</b> писать предикаты в следующем порядке, так как именно в этом порядке они выполняются на сервере:</p>
 			<pre class="border border-success"><code class="SQL">--WHERE
 --GROUP
 --HAVING
 --ORDER
 --LIMIT</code></pre>
-			
-		
+
+
 
 			<h4 id="task3.2">Запрос на объединение таблиц JOIN</h4>
-			<p></p>
+			<p>3.2 запросы на объединение таблиц (JOIN) между сочетаниями по две, три таблицы (не менее 10 штук) Примечание: Запросы должны гибко выбирать данные из базы</p>
+
+			<p>Для того что бы увеличить эффективность БД необходимо, что бы в таблицах не было повторяющихся значений. Для этого удалим из таблицы c объектами недвижимости 'estateObjects' колонки 'type', 'address', 'postIndex', 'rooms' и создадим на их основе отдельные таблицы из двух колонок которые будут содержать только индекс и значение, дополнительно создадим таблицу с собственниками 'landlords' и городами 'cities'. </p>
+			<p>Для таблицы со списком клиентов 'customers' создадим дополнительные таблицы со статусами, гражданством 'nationality',родными языками 'language', и банками, клиентами которых являются наши клиенты 'banks'. </p>
+			<p>Все дополнительные таблицы состоят из двух колонок - имя и значения и служат для того, что бы использоваться в качестве вспомогатальных таблиц для двух остальных.</p>
+
+
+
+			<p>Удаляем лишние колонки</p>
 			<pre class="border border-success">
 		    <code class="SQL">
-
-		
+ALTER TABLE `estate_objects` DROP COLUMN `type`;
+ALTER TABLE `estate_objects` DROP COLUMN `address`;
+ALTER TABLE `estate_objects` DROP COLUMN `post_index`;
 				</code>
 			</pre>
+
+			<p>Добавляем аналогичные колонки с ID </p>
+			<pre class="border border-success">
+		    <code class="SQL">
+ALTER TABLE `estate_objects` ADD COLUMN `typeID` INT;
+ALTER TABLE `estate_objects` ADD COLUMN `addressID` INT;
+ALTER TABLE `estate_objects` ADD COLUMN `postindexID` INT;
+ALTER TABLE `estate_objects` ADD COLUMN `landlordID` INT;
+ALTER TABLE `estate_objects` ADD COLUMN `cityID` INT;
+				</code>
+			</pre>
+			<p>Далее создаем таблицы соответствующие этим колонкам:</p>
+
+			<pre class="border border-success">
+		    <code class="SQL">
+CREATE TABLE IF NOT EXISTS `mydb`.`objectType` (
+  `objectTypeID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `Type` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`objectTypeID`),
+  UNIQUE INDEX `objectTypeID_UNIQUE` (`objectTypeID` ASC),
+  UNIQUE INDEX `Type_UNIQUE` (`Type` ASC))
+ENGINE = InnoDB;
+		
+<!--
+CREATE TABLE IF NOT EXISTS `mydb`.`objectAddress` (
+  `objectAddressID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `Address` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`objectAddressID`),
+  UNIQUE INDEX `objectAddressID_UNIQUE` (`objectAddressID` ASC),
+  UNIQUE INDEX `Address_UNIQUE` (`Address` ASC))
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`objectPostIndex` (
+  `objectPostIndexID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `PostIndex` MEDIUMINT NOT NULL,
+  PRIMARY KEY (`objectPostIndexID`),
+  UNIQUE INDEX `objectPostIndexID_UNIQUE` (`objectPostIndexID` ASC),
+  UNIQUE INDEX `PostIndex_UNIQUE` (`PostIndex` ASC))
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`landlords` (
+  `landlordID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `landlordName` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`landlordID`),
+  UNIQUE INDEX `landlordID_UNIQUE` (`landlordID` ASC),
+  UNIQUE INDEX `landlordName_UNIQUE` (`landlordName` ASC))
+ENGINE = InnoDB;
+			
+CREATE TABLE IF NOT EXISTS `mydb`.`objectCity` (
+  `objectCityID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `City` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`objectCityID`),
+  UNIQUE INDEX `objectCityID_UNIQUE` (`objectCityID` ASC),
+  UNIQUE INDEX `City_UNIQUE` (`City` ASC))
+  ENGINE = InnoDB;
+-->
+
+				</code>
+			</pre>
+			<p>Аналогично создаем таблицы <b>objectAddress</b>, <b>objectPostIndex</b>, <b>landlords</b>, <b>objectCity</b> </p>
+			<p>Заполняем эти таблицы с помощью LOAD DATA.</p>
+			<p>Вставляем в таблицу estate_objects значения созданных нами только что колонок</p>
+			<pre class="border border-success">
+		    <code class="SQL">
+<b>UPDATE estate_objects 
+	SET typeID = 1 
+	WHERE `idreal estate_objects` = 1; --для того чтобы использовать в запросе название столбца с пробелом внутри используем символ `</b>
+				</code>
+			</pre>
+			<p>Таким же образом заполняем новые ячейки таблицы estate_objects полностью</p>
+
+			<p>Таким образом получается система из одной основной таблицы и 5 вспомогательных таблиц</p>
+
+			<div class="row">
+				<div class="col-12 mb-1"><img style="width: 100%" src="http://i.yapx.ru/BMPwF.png" alt=""></div>
+				<div class="col-3"><img class="img-fluid" src="https://a.radikal.ru/a31/1804/22/b107cfcb4905.png" alt=""></div>
+				<div class="col-3"><img class="img-fluid" src="https://c.radikal.ru/c00/1804/3d/76ba32a5bf30.png" alt=""></div>
+				<div class="col-3"><img class="img-fluid" src="https://d.radikal.ru/d13/1804/1b/5ef599d49cea.png" alt=""></div>
+				<div class="col-3"><img src="https://d.radikal.ru/d14/1804/32/b4da9d1e6232.png" alt=""></div>
+				<div class="col-3 mt-1"><img src="https://a.radikal.ru/a31/1804/71/a6ca91fb3931.png" alt=""></div>
+				<div class="col-2"></div>
+			</div>
+			<!--Далее нужно вставить в основные ячейки соответствующие индексы и наполнить вспомогательные таблицы через LOAD DATA, далее JOHN-->
+			<p>Далее используем <b>INNER JOHN</b> для объединения основной таблицы estate_objects и вспомогательных таблиц </p>
+			<pre class="border border-success">
+		    <code class="SQL">SELECT estate_objects.`idreal estate_objects`, estate_objects.area, estate_objects.rooms,
+estate_objects.description, estate_objects.price, objectType.Type, objectaddress.Address, 
+objectpostindex.PostIndex, landlords.landlordName, objectCity.City
+	FROM estate_objects
+		INNER JOIN objectType ON estate_objects.typeID = objectType.objectTypeID
+		INNER JOIN objectaddress ON estate_objects.addressID = objectaddress.objectAddressID
+		INNER JOIN objectpostindex ON estate_objects.postindexID = objectpostindex.objectPostIndexID
+		INNER JOIN landlords ON estate_objects.landlordID  = landlords.landlordID
+		INNER JOIN objectCity ON estate_objects.cityID = objectCity.objectCityID;</code></pre>
+<img style="width: 100%" src="http://i.yapx.ru/BMPvG.png" alt="">
+
 
 		</section>
 	</div>
