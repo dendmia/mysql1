@@ -281,36 +281,25 @@ GROUP BY last_name, age;</code></pre>
 
 
 			<p>Удаляем лишние колонки</p>
-			<pre class="border border-success">
-		    <code class="SQL">
-ALTER TABLE `estate_objects` DROP COLUMN `type`;
+			<pre class="border border-success"><code class="SQL">ALTER TABLE `estate_objects` DROP COLUMN `type`;
 ALTER TABLE `estate_objects` DROP COLUMN `address`;
-ALTER TABLE `estate_objects` DROP COLUMN `post_index`;
-				</code>
-			</pre>
+ALTER TABLE `estate_objects` DROP COLUMN `post_index`;</code></pre>
 
 			<p>Добавляем аналогичные колонки с ID </p>
-			<pre class="border border-success">
-		    <code class="SQL">
-ALTER TABLE `estate_objects` ADD COLUMN `typeID` INT;
+			<pre class="border border-success"><code class="SQL">ALTER TABLE `estate_objects` ADD COLUMN `typeID` INT;
 ALTER TABLE `estate_objects` ADD COLUMN `addressID` INT;
 ALTER TABLE `estate_objects` ADD COLUMN `postindexID` INT;
 ALTER TABLE `estate_objects` ADD COLUMN `landlordID` INT;
-ALTER TABLE `estate_objects` ADD COLUMN `cityID` INT;
-				</code>
-			</pre>
+ALTER TABLE `estate_objects` ADD COLUMN `cityID` INT;</code></pre>
 			<p>Далее создаем таблицы соответствующие этим колонкам:</p>
 
-			<pre class="border border-success">
-		    <code class="SQL">
-CREATE TABLE IF NOT EXISTS `mydb`.`objectType` (
+			<pre class="border border-success"><code class="SQL">CREATE TABLE IF NOT EXISTS `mydb`.`objectType` (
   `objectTypeID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `Type` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`objectTypeID`),
   UNIQUE INDEX `objectTypeID_UNIQUE` (`objectTypeID` ASC),
   UNIQUE INDEX `Type_UNIQUE` (`Type` ASC))
 ENGINE = InnoDB;
-		
 <!--
 CREATE TABLE IF NOT EXISTS `mydb`.`objectAddress` (
   `objectAddressID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -343,20 +332,13 @@ CREATE TABLE IF NOT EXISTS `mydb`.`objectCity` (
   UNIQUE INDEX `objectCityID_UNIQUE` (`objectCityID` ASC),
   UNIQUE INDEX `City_UNIQUE` (`City` ASC))
   ENGINE = InnoDB;
--->
-
-				</code>
-			</pre>
+--></code></pre>
 			<p>Аналогично создаем таблицы <b>objectAddress</b>, <b>objectPostIndex</b>, <b>landlords</b>, <b>objectCity</b> </p>
 			<p>Заполняем эти таблицы с помощью LOAD DATA.</p>
 			<p>Вставляем в таблицу estate_objects значения созданных нами только что колонок</p>
-			<pre class="border border-success">
-		    <code class="SQL">
-<b>UPDATE estate_objects 
+			<pre class="border border-success"><code class="SQL"><b>UPDATE estate_objects 
 	SET typeID = 1 
-	WHERE `idreal estate_objects` = 1; --для того чтобы использовать в запросе название столбца с пробелом внутри используем символ `</b>
-				</code>
-			</pre>
+	WHERE `idreal estate_objects` = 1; --для того чтобы использовать в запросе название столбца с пробелом внутри используем символ `</b></code></pre>
 			<p>Таким же образом заполняем новые ячейки таблицы estate_objects полностью</p>
 
 			<p>Таким образом получается система из одной основной таблицы и 5 вспомогательных таблиц</p>
@@ -372,8 +354,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`objectCity` (
 			</div>
 			<!--Далее нужно вставить в основные ячейки соответствующие индексы и наполнить вспомогательные таблицы через LOAD DATA, далее JOHN-->
 			<p>Далее используем <b>INNER JOHN</b> для объединения основной таблицы estate_objects и вспомогательных таблиц </p>
-			<pre class="border border-success">
-		    <code class="SQL">SELECT estate_objects.`idreal estate_objects`, estate_objects.area, estate_objects.rooms,
+			<pre class="border border-success"><code class="SQL">SELECT estate_objects.`idreal estate_objects`, estate_objects.area, estate_objects.rooms,
 estate_objects.description, estate_objects.price, objectType.Type, objectaddress.Address, 
 objectpostindex.PostIndex, landlords.landlordName, objectCity.City
 	FROM estate_objects
@@ -384,11 +365,43 @@ objectpostindex.PostIndex, landlords.landlordName, objectCity.City
 		INNER JOIN objectCity ON estate_objects.cityID = objectCity.objectCityID;</code></pre>
 <img style="width: 100%" src="http://i.yapx.ru/BMPvG.png" alt="">
 
+<p>Используя <b>LEFT OUTER JOIN</b> копируются из левой таблицы(первой в записи) не только данные у которых есть соответствия во второй, но и остальные </p>
+					<pre class="border border-success"><code class="SQL">SELECT estate_objects.`idreal estate_objects`, estate_objects.area, estate_objects.rooms,
+estate_objects.description, estate_objects.price, objectCity.City
+	FROM objectCity
+		LEFT OUTER JOIN estate_objects ON estate_objects.cityID = objectCity.objectCityID;</code></pre>
+		<img style="width: 100%" src="http://i.yapx.ru/BMP0n.png" alt="">
+		<p>Таким образом отобразились даже те города которые есть в таблице, но в которых нет наших объектов недвижимости</p>
+		<p>Используя RIGHT OUTER JOIN копируются из правой таблицы(второй в записи) не только данные у которых есть соответствия во второй, но и остальные</p>
+					<pre class="border border-success"><code class="SQL">SELECT estate_objects.`idreal estate_objects`, estate_objects.area, estate_objects.rooms,
+estate_objects.description, estate_objects.price, objectCity.City
+	FROM objectCity
+		RIGHT OUTER JOIN estate_objects ON estate_objects.cityID = objectCity.objectCityID;</code></pre>
+<img src="http://i.yapx.ru/BMP0z.png" alt="">
+	
+<p>Для того что бы скопировать все записи из всех таблиц и по возможности установить соответствие друг другу используется полное объединение <b>FULL OUTER JOIN</b></p>
+	
+	<pre class="border border-success"><code class="SQL">SELECT * FROM estate_objects
+	    	FULL OUTER JOIN objectCity
+	    	ON estate_objects.cityID = objectCity.city;
+		    </code></pre>
+		    <img src="http://i.yapx.ru/BMP5y.png" alt="">
+<p>(!) В MySQL нет полного внешнего объединения. Прийдетсяписать через левые:</p>
+
+
+	<pre class="border border-success"><code class="SQL">SELECT * FROM estate_objects LEFT JOIN objectCity ON estate_objects.cityID = objectCity.city
+UNION
+SELECT * FROM objectCity  LEFT JOIN estate_objects ON estate_objects.cityID = objectCity.city;
+		    </code></pre>
+<img src="http://i.yapx.ru/BMP6v.png" alt="">
+
+<p>Кросс объединение делается с помощью <b>CROSS JOIN</b>. В результате каждой записи левой таблицы ставятся в соответствие все записи правой. Нет условия связи. </p>
+	<pre class="border border-success"><code class="SQL">SELECT *
+	FROM estate_objects
+		CROSS JOIN objectCity;</code></pre>	
 
 		</section>
 	</div>
-
-
 
 
 	<script src="highlight.pack.js"></script>
