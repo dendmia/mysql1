@@ -424,9 +424,42 @@ CREATE INDEX idx_object_price ON estate_objects (price);
 		    <pre class="border border-success"><code class="SQL">
 EXPLAIN SELECT last_name,date_of_birth FROM customers;
 		    </code></pre>
-		    <p>В результате анализа запроса мы видим какой индекс использовался  </p>
+		    <p>В результате анализа запроса в колонке key мы видим какой индекс использовался при запросе (idx_customers_name). В колонке row мы видим количество 
+		    обработанных строк, чем оно меньше тем быстрее будет запрос!  </p>
 		    <img class="img-fluid" src="https://i.yapx.ru/BREef.png" alt="">
-		    
+
+			<pre class="border border-success"><code class="SQL">
+EXPLAIN SELECT DISTINCT age FROM customers;
+
+EXPLAIN SELECT last_name,first_name
+FROM customers
+ORDER BY last_name DESC;
+
+EXPLAIN SELECT last_name,first_name 
+FROM customers 
+ORDER BY rand(); 
+
+EXPLAIN SELECT AVG(age) FROM customers;
+
+EXPLAIN SELECT last_name, age 
+FROM customers
+GROUP BY last_name, age;
+
+		    </code></pre>		    
+		    <img class="img-fluid" src="https://i.yapx.ru/BREoC.png" alt="">
+		    <img class="img-fluid" src="https://i.yapx.ru/BREoy.png" alt="">
+			<pre class="border border-success"><code class="SQL">
+EXPLAIN SELECT estate_objects.`idreal estate_objects`, estate_objects.area, estate_objects.rooms,
+estate_objects.description, estate_objects.price, objectType.Type, objectaddress.Address, 
+objectpostindex.PostIndex, landlords.landlordName, objectCity.City
+	FROM estate_objects
+		INNER JOIN objectType ON estate_objects.typeID = objectType.objectTypeID
+		INNER JOIN objectaddress ON estate_objects.addressID = objectaddress.objectAddressID
+		INNER JOIN objectpostindex ON estate_objects.postindexID = objectpostindex.objectPostIndexID
+		INNER JOIN landlords ON estate_objects.landlordID  = landlords.landlordID
+		INNER JOIN objectCity ON estate_objects.cityID = objectCity.objectCityID;
+		    </code></pre>			    
+		    <img class="img-fluid" src="https://i.yapx.ru/BREu0.png" alt="">		    		    		    
 		</section>
 		<section>
 			<h2 class="mt-5" id="task4.2"></h2>
