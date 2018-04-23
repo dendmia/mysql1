@@ -14,6 +14,7 @@
 		h4 {
 			padding-top: 3em;
 		}
+
 	</style>
 
 </head>
@@ -25,6 +26,8 @@
 			<a class="nav-link" href="#task2">Задание 2 INSERT</a>
 			<a class="nav-link" href="#task3.1">Задание 3.1 SELECT</a>
 			<a class="nav-link" href="#task3.2">Задание 3.2 JOHN</a>
+			<a class="nav-link" href="#task4.1">Задание 4.1 INDEX</a>
+			<a class="nav-link" href="#task4.2">Задание 4.2 EXPLAIN</a>
 		</div>
 		<a href=""></a>
 		<section>
@@ -363,43 +366,70 @@ objectpostindex.PostIndex, landlords.landlordName, objectCity.City
 		INNER JOIN objectpostindex ON estate_objects.postindexID = objectpostindex.objectPostIndexID
 		INNER JOIN landlords ON estate_objects.landlordID  = landlords.landlordID
 		INNER JOIN objectCity ON estate_objects.cityID = objectCity.objectCityID;</code></pre>
-<img style="width: 100%" src="http://i.yapx.ru/BMPvG.png" alt="">
+			<img style="width: 100%" src="http://i.yapx.ru/BMPvG.png" alt="">
 
-<p>Используя <b>LEFT OUTER JOIN</b> копируются из левой таблицы(первой в записи) не только данные у которых есть соответствия во второй, но и остальные </p>
-					<pre class="border border-success"><code class="SQL">SELECT estate_objects.`idreal estate_objects`, estate_objects.area, estate_objects.rooms,
+			<p>Используя <b>LEFT OUTER JOIN</b> копируются из левой таблицы(первой в записи) не только данные у которых есть соответствия во второй, но и остальные </p>
+			<pre class="border border-success"><code class="SQL">SELECT estate_objects.`idreal estate_objects`, estate_objects.area, estate_objects.rooms,
 estate_objects.description, estate_objects.price, objectCity.City
 	FROM objectCity
 		LEFT OUTER JOIN estate_objects ON estate_objects.cityID = objectCity.objectCityID;</code></pre>
-		<img style="width: 100%" src="http://i.yapx.ru/BMP0n.png" alt="">
-		<p>Таким образом отобразились даже те города которые есть в таблице, но в которых нет наших объектов недвижимости</p>
-		<p>Используя RIGHT OUTER JOIN копируются из правой таблицы(второй в записи) не только данные у которых есть соответствия во второй, но и остальные</p>
-					<pre class="border border-success"><code class="SQL">SELECT estate_objects.`idreal estate_objects`, estate_objects.area, estate_objects.rooms,
+			<img style="width: 100%" src="http://i.yapx.ru/BMP0n.png" alt="">
+			<p>Таким образом отобразились даже те города которые есть в таблице, но в которых нет наших объектов недвижимости</p>
+			<p>Используя RIGHT OUTER JOIN копируются из правой таблицы(второй в записи) не только данные у которых есть соответствия во второй, но и остальные</p>
+			<pre class="border border-success"><code class="SQL">SELECT estate_objects.`idreal estate_objects`, estate_objects.area, estate_objects.rooms,
 estate_objects.description, estate_objects.price, objectCity.City
 	FROM objectCity
 		RIGHT OUTER JOIN estate_objects ON estate_objects.cityID = objectCity.objectCityID;</code></pre>
-<img src="http://i.yapx.ru/BMP0z.png" alt="">
-	
-<p>Для того что бы скопировать все записи из всех таблиц и по возможности установить соответствие друг другу используется полное объединение <b>FULL OUTER JOIN</b></p>
-	
-	<pre class="border border-success"><code class="SQL">SELECT * FROM estate_objects
+			<img src="http://i.yapx.ru/BMP0z.png" alt="">
+
+			<p>Для того что бы скопировать все записи из всех таблиц и по возможности установить соответствие друг другу используется полное объединение <b>FULL OUTER JOIN</b></p>
+
+			<pre class="border border-success"><code class="SQL">SELECT * FROM estate_objects
 	    	FULL OUTER JOIN objectCity
 	    	ON estate_objects.cityID = objectCity.city;
 		    </code></pre>
-		    <img class="img-fluid" src="http://i.yapx.ru/BMP5y.png" alt="">
-<p>(!) В MySQL нет полного внешнего объединения. Прийдетсяписать через левые:</p>
+			<img class="img-fluid" src="http://i.yapx.ru/BMP5y.png" alt="">
+			<p>(!) В MySQL нет полного внешнего объединения. Прийдетсяписать через левые:</p>
 
 
-	<pre class="border border-success"><code class="SQL">SELECT * FROM estate_objects LEFT JOIN objectCity ON estate_objects.cityID = objectCity.city
+			<pre class="border border-success"><code class="SQL">SELECT * FROM estate_objects LEFT JOIN objectCity ON estate_objects.cityID = objectCity.city
 UNION
 SELECT * FROM objectCity  LEFT JOIN estate_objects ON estate_objects.cityID = objectCity.city;
 		    </code></pre>
-<img class="img-fluid" src="http://i.yapx.ru/BMP6v.png" alt="">
+			<img class="img-fluid" src="http://i.yapx.ru/BMP6v.png" alt="">
 
-<p>Кросс объединение делается с помощью <b>CROSS JOIN</b>. В результате каждой записи левой таблицы ставятся в соответствие все записи правой. Нет условия связи. </p>
-	<pre class="border border-success"><code class="SQL">SELECT *
+			<p>Кросс объединение делается с помощью <b>CROSS JOIN</b>. В результате каждой записи левой таблицы ставятся в соответствие все записи правой. Нет условия связи. </p>
+			<pre class="border border-success"><code class="SQL">SELECT *
 	FROM estate_objects
-		CROSS JOIN objectCity;</code></pre>	
+		CROSS JOIN objectCity;</code></pre>
 
+		</section>
+		<section>
+			<h2 class="mt-5" id="task4.1">Задание 4.1</h2>
+			<p>Создайте необходимые индексы в таблицах.</p>
+			<p>Индексы необходимо создавать там где планируется часто использовать поиск. Например клиентов менеджеры будут часто искать по имени и фамилии.  Создаем индекс в таблице customers. В таблице с объектами недвижимости будут часто искать по цене и площади, создаем индексы отдельно для цены и площади. Индексирование делает операции выборки быстрее, а вставку медленнее. Индексировать можно только простые типы данных! Нельзя индексировать такие типы как например text.</p>
+			<pre class="border border-success"><code class="SQL">
+CREATE INDEX idx_customers_name
+ON customers(last_name, first_name);
+
+CREATE INDEX idx_object_area ON estate_objects (area);
+
+CREATE INDEX idx_object_price ON estate_objects (price);      	    
+		    </code></pre>
+		    
+		    <h2 id="task4.2" class="mt-5">Задание 4.2</h2>
+		    <p>Проанализируйте эффективность запросов из предыдущего задания оператором EXPLAIN</p>
+		    <p>Для анализа медленных запросов в Mysql используется инструкция EXPLAIN. Проанализируем запросы с использованием этой инструкции:</p>
+		    
+		    <pre class="border border-success"><code class="SQL">
+EXPLAIN SELECT last_name,date_of_birth FROM customers;
+		    </code></pre>
+		    <p>В результате анализа запроса мы видим какой индекс использовался  </p>
+		    <img class="img-fluid" src="https://i.yapx.ru/BREef.png" alt="">
+		    
+		</section>
+		<section>
+			<h2 class="mt-5" id="task4.2"></h2>
 		</section>
 	</div>
 
@@ -407,6 +437,7 @@ SELECT * FROM objectCity  LEFT JOIN estate_objects ON estate_objects.cityID = ob
 	<script src="highlight.pack.js"></script>
 	<script>
 		hljs.initHighlightingOnLoad();
+
 	</script>
 </body>
 
