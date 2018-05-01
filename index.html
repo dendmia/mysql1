@@ -14,7 +14,6 @@
 		h4 {
 			padding-top: 3em;
 		}
-
 	</style>
 
 </head>
@@ -28,6 +27,7 @@
 			<a class="nav-link" href="#task3.2">Задание 3.2 JOHN</a>
 			<a class="nav-link" href="#task4.1">Задание 4.1 INDEX</a>
 			<a class="nav-link" href="#task4.2">Задание 4.2 EXPLAIN</a>
+			<a class="nav-link" href="#task5">Задание 5 </a>
 		</div>
 		<a href=""></a>
 		<section>
@@ -407,7 +407,7 @@ SELECT * FROM objectCity  LEFT JOIN estate_objects ON estate_objects.cityID = ob
 		<section>
 			<h2 class="mt-5" id="task4.1">Задание 4.1</h2>
 			<p>Создайте необходимые индексы в таблицах.</p>
-			<p>Индексы необходимо создавать там где планируется часто использовать поиск. Например клиентов менеджеры будут часто искать по имени и фамилии.  Создаем индекс в таблице customers. В таблице с объектами недвижимости будут часто искать по цене и площади, создаем индексы отдельно для цены и площади. Индексирование делает операции выборки быстрее, а вставку медленнее. Индексировать можно только простые типы данных! Нельзя индексировать такие типы как например text.</p>
+			<p>Индексы необходимо создавать там где планируется часто использовать поиск. Например клиентов менеджеры будут часто искать по имени и фамилии. Создаем индекс в таблице customers. В таблице с объектами недвижимости будут часто искать по цене и площади, создаем индексы отдельно для цены и площади. Индексирование делает операции выборки быстрее, а вставку медленнее. Индексировать можно только простые типы данных! Нельзя индексировать такие типы как например text.</p>
 			<pre class="border border-success"><code class="SQL">
 CREATE INDEX idx_customers_name
 ON customers(last_name, first_name);
@@ -416,17 +416,16 @@ CREATE INDEX idx_object_area ON estate_objects (area);
 
 CREATE INDEX idx_object_price ON estate_objects (price);      	    
 		    </code></pre>
-		    
-		    <h2 id="task4.2" class="mt-5">Задание 4.2</h2>
-		    <p>Проанализируйте эффективность запросов из предыдущего задания оператором EXPLAIN</p>
-		    <p>Для анализа медленных запросов в Mysql используется инструкция EXPLAIN. Проанализируем запросы с использованием этой инструкции:</p>
-		    
-		    <pre class="border border-success"><code class="SQL">
+
+			<h2 id="task4.2" class="mt-5">Задание 4.2</h2>
+			<p>Проанализируйте эффективность запросов из предыдущего задания оператором EXPLAIN</p>
+			<p>Для анализа медленных запросов в Mysql используется инструкция EXPLAIN. Проанализируем запросы с использованием этой инструкции:</p>
+
+			<pre class="border border-success"><code class="SQL">
 EXPLAIN SELECT last_name,date_of_birth FROM customers;
 		    </code></pre>
-		    <p>В результате анализа запроса в колонке key мы видим какой индекс использовался при запросе (idx_customers_name). В колонке row мы видим количество 
-		    обработанных строк, чем оно меньше тем быстрее будет запрос!  </p>
-		    <img class="img-fluid" src="https://i.yapx.ru/BREef.png" alt="">
+			<p>В результате анализа запроса в колонке key мы видим какой индекс использовался при запросе (idx_customers_name). В колонке row мы видим количество обработанных строк, чем оно меньше тем быстрее будет запрос! </p>
+			<img class="img-fluid" src="https://i.yapx.ru/BREef.png" alt="">
 
 			<pre class="border border-success"><code class="SQL">
 EXPLAIN SELECT DISTINCT age FROM customers;
@@ -445,9 +444,9 @@ EXPLAIN SELECT last_name, age
 FROM customers
 GROUP BY last_name, age;
 
-		    </code></pre>		    
-		    <img class="img-fluid" src="https://i.yapx.ru/BREoC.png" alt="">
-		    <img class="img-fluid" src="https://i.yapx.ru/BREoy.png" alt="">
+		    </code></pre>
+			<img class="img-fluid" src="https://i.yapx.ru/BREoC.png" alt="">
+			<img class="img-fluid" src="https://i.yapx.ru/BREoy.png" alt="">
 			<pre class="border border-success"><code class="SQL">
 EXPLAIN SELECT estate_objects.`idreal estate_objects`, estate_objects.area, estate_objects.rooms,
 estate_objects.description, estate_objects.price, objectType.Type, objectaddress.Address, 
@@ -458,11 +457,33 @@ objectpostindex.PostIndex, landlords.landlordName, objectCity.City
 		INNER JOIN objectpostindex ON estate_objects.postindexID = objectpostindex.objectPostIndexID
 		INNER JOIN landlords ON estate_objects.landlordID  = landlords.landlordID
 		INNER JOIN objectCity ON estate_objects.cityID = objectCity.objectCityID;
-		    </code></pre>			    
-		    <img class="img-fluid" src="https://i.yapx.ru/BREu0.png" alt="">		    		    		    
+		    </code></pre>
+			<img class="img-fluid" src="https://i.yapx.ru/BREu0.png" alt="">
 		</section>
 		<section>
-			<h2 class="mt-5" id="task4.2"></h2>
+			<h2 class="mt-5" id="task5">Задание 5</h2>
+			<p>Напишите запросы на удаление и обновление данных из таблиц (предусмотреть удаления и обновления данных по условию)</p>
+			<p>Запрос на вставку данных в таблицу estate_objects:</p>
+			<pre class="border border-success"><code class="SQL">
+INSERT INTO estate_objects 
+	    (area, rooms, description, price, typeID, addressID, postindexID, landlordID, cityID) 
+values('50', '5', 'Маленькая но пятикомнатная квартира', '5000000', '1', '1', '1', '1', '1' );			
+		    </code></pre>
+			<img class="img-fluid" src="http://i.yapx.ru/BTD43.png" alt="">
+	<p>Запрос на обновление данных из таблицы по условию:</p>
+	<p>Обратные кавычки используем для обращения к полю в условии WHERE к `idreal estate_objects` т.к. оно имеет ПРОБЕЛ.</p>
+			<pre class="border border-success"><code class="SQL">
+UPDATE estate_objects SET 
+	    area = '100', rooms = '8', description = 'Площадь возросла вдвое за счет пристройки к внешней стене здания!' 
+	    WHERE `idreal estate_objects` = '10';
+		    </code></pre>
+			<img class="img-fluid" src="http://i.yapx.ru/BTEWN.png" alt="">	
+	<p>Запрос на удаление данных из таблицы по условию:</p>
+	<p>Удалим все объекты число комнат которых больше шести</p>
+			<pre class="border border-success"><code class="SQL">
+DELETE FROM estate_objects WHERE rooms >= '6';
+		    </code></pre>
+			<img class="img-fluid" src="http://i.yapx.ru/BTEed.png" alt="">						 				 
 		</section>
 	</div>
 
@@ -470,7 +491,6 @@ objectpostindex.PostIndex, landlords.landlordName, objectCity.City
 	<script src="highlight.pack.js"></script>
 	<script>
 		hljs.initHighlightingOnLoad();
-
 	</script>
 </body>
 
