@@ -14,6 +14,7 @@
 		h4 {
 			padding-top: 3em;
 		}
+
 	</style>
 
 </head>
@@ -28,6 +29,7 @@
 			<a class="nav-link" href="#task4.1">Задание 4.1 INDEX</a>
 			<a class="nav-link" href="#task4.2">Задание 4.2 EXPLAIN</a>
 			<a class="nav-link" href="#task5">Задание 5 </a>
+			<a class="nav-link" href="#task6">Задание 6 VIEW</a>
 		</div>
 		<a href=""></a>
 		<section>
@@ -470,20 +472,42 @@ INSERT INTO estate_objects
 values('50', '5', 'Маленькая но пятикомнатная квартира', '5000000', '1', '1', '1', '1', '1' );			
 		    </code></pre>
 			<img class="img-fluid" src="http://i.yapx.ru/BTD43.png" alt="">
-	<p>Запрос на обновление данных из таблицы по условию:</p>
-	<p>Обратные кавычки используем для обращения к полю в условии WHERE к `idreal estate_objects` т.к. оно имеет ПРОБЕЛ.</p>
+			<p>Запрос на обновление данных из таблицы по условию:</p>
+			<p>Обратные кавычки используем для обращения к полю в условии WHERE к `idreal estate_objects` т.к. оно имеет ПРОБЕЛ.</p>
 			<pre class="border border-success"><code class="SQL">
 UPDATE estate_objects SET 
 	    area = '100', rooms = '8', description = 'Площадь возросла вдвое за счет пристройки к внешней стене здания!' 
 	    WHERE `idreal estate_objects` = '10';
 		    </code></pre>
-			<img class="img-fluid" src="http://i.yapx.ru/BTEWN.png" alt="">	
-	<p>Запрос на удаление данных из таблицы по условию:</p>
-	<p>Удалим все объекты число комнат которых больше шести</p>
+			<img class="img-fluid" src="http://i.yapx.ru/BTEWN.png" alt="">
+			<p>Запрос на удаление данных из таблицы по условию:</p>
+			<p>Удалим все объекты число комнат которых больше шести</p>
 			<pre class="border border-success"><code class="SQL">
 DELETE FROM estate_objects WHERE rooms >= '6';
 		    </code></pre>
-			<img class="img-fluid" src="http://i.yapx.ru/BTEed.png" alt="">						 				 
+			<img class="img-fluid" src="http://i.yapx.ru/BTEed.png" alt="">
+		</section>
+		<section>
+			<h2 class="mt-5" id="task6">Задание 6 VIEW</h2>
+			<p>Создайте просмотры (View), показывающие квартиры с определённым количеством комнат; показывающий кол-во квартир с разным числом комнат</p>
+			<p>Создаем просмотр показывающий все трехкомнатные квартиры:</p>
+			<pre class="border border-success"><code class="SQL">
+DROP VIEW IF EXISTS threeRoomsAparts;
+CREATE VIEW threeRoomsAparts AS
+   SELECT * 
+   FROM estate_objects 
+   WHERE rooms = 3;
+		    </code></pre>
+			<p>После чего обращаемся к threeRoomsAparts с помощью SELECT как будто это таблица</p>
+			<img class="img-fluid" src="http://i.yapx.ru/BU6yH.png" alt="">
+			<p>Создаем просмотр показывающий количество квартир с неодинаковым количеством комнат:</p>
+			<pre class="border border-success"><code class="SQL">
+DROP VIEW IF EXISTS differentRoomsAparts;
+CREATE VIEW differentRoomsAparts AS	
+	SELECT COUNT(DISTINCT rooms) 
+	FROM estate_objects;
+		    </code></pre>
+			<img class="img-fluid" src="http://i.yapx.ru/BU7EU.png" alt="">
 		</section>
 	</div>
 
@@ -491,6 +515,7 @@ DELETE FROM estate_objects WHERE rooms >= '6';
 	<script src="highlight.pack.js"></script>
 	<script>
 		hljs.initHighlightingOnLoad();
+
 	</script>
 </body>
 
