@@ -14,7 +14,6 @@
 		h4 {
 			padding-top: 3em;
 		}
-
 	</style>
 
 </head>
@@ -30,6 +29,7 @@
 			<a class="nav-link" href="#task4.2">Задание 4.2 EXPLAIN</a>
 			<a class="nav-link" href="#task5">Задание 5 </a>
 			<a class="nav-link" href="#task6">Задание 6 VIEW</a>
+			<a class="nav-link" href="#task7">Задание 7 </a>
 		</div>
 		<a href=""></a>
 		<section>
@@ -509,13 +509,77 @@ CREATE VIEW differentRoomsAparts AS
 		    </code></pre>
 			<img class="img-fluid" src="http://i.yapx.ru/BU7EU.png" alt="">
 		</section>
+		<section>
+			<h2 class="mt-5" id="task7">Задание 7</h2>
+			<p>Создайте хранимые процедуры на 10 запросов манипуляции данными.</p>
+			<p>Для того что ыб создавать хранимые процедуры изменяем разделитель(DELIMITER), так как в хранимых процедурах может быть много операторов, каждый из которых должен оканчиваться точкой с запятой.</p>
+			<p>В первой процедуре мы запишем 2 запроса на манипуляцию даннымы. Это покажет нам всех клиентов и объекты c характеристиками, которые мы можем им предложить. </p>
+			<pre class="border border-success"><code class="SQL">
+DELIMITER $$ ;
+CREATE PROCEDURE show_internal_estate_market()
+BEGIN	    
+SELECT description, price FROM estate_objects; 
+SELECT estate_objects.`idreal estate_objects`, estate_objects.area, estate_objects.rooms,
+estate_objects.description, estate_objects.price, objectType.Type, objectaddress.Address, 
+objectpostindex.PostIndex, landlords.landlordName, objectCity.City
+	FROM estate_objects
+		INNER JOIN objectType ON estate_objects.typeID = objectType.objectTypeID
+		INNER JOIN objectaddress ON estate_objects.addressID = objectaddress.objectAddressID
+		INNER JOIN objectpostindex ON estate_objects.postindexID = objectpostindex.objectPostIndexID
+		INNER JOIN landlords ON estate_objects.landlordID  = landlords.landlordID
+		INNER JOIN objectCity ON estate_objects.cityID = objectCity.objectCityID;
+END $$
+DELIMITER ; $$
+		    </code></pre>
+			<img class="img-fluid" src="http://i.yapx.ru/BXkr3.png" alt="">
+
+			<p>Для того, чтобы узнать информацию о наших клиентах включая их фамилии и средний возраст создадим из двух запросов процедуру customer_appearance </p>
+			<pre class="border border-success"><code class="SQL">DELIMITER $$ ;
+CREATE PROCEDURE customer_appearance()
+BEGIN
+SELECT GROUP_CONCAT(last_name) FROM customers;
+SELECT AVG(age) FROM customers;
+END $$
+DELIMITER ; $$
+</code></pre>
+			<img class="img-fluid" src="http://i.yapx.ru/BXk72.png" alt="">
+<p>В хранимую процедуру можно передать параметры. Пареметры бывают трех видов IN(входной, который нужно передать при вызове, именно IN подразумевается по умолчанию), 
+OUT(это выходной параметр, в него будет производиться запись, это переменная), NOW. Создадим процедуру добавляющую нового клиента с параметрами обязательными для указания(имя, фамилия, телефон, почта) и показывающую таблицу с новым клиентом. Причем локальные переменные в пареметрах обозначаются без @, и это особенность исключительно MYSQL!  </p>
+			<pre class="border border-success"><code class="SQL">DELIMITER $$ ;
+CREATE PROCEDURE sp_add_new_customer(IN first_n VARCHAR(33),IN last_n VARCHAR(33), phone_num CHAR(10), mail VARCHAR(45))
+BEGIN
+	INSERT INTO customers
+	SET first_name = first_n, last_name = last_n, phone_number = phone_num, email = mail;
+	SELECT * FROM customers;
+END $$
+DELIMITER ; $$
+
+CALL sp_add_new_customer('Иванов','Иван','0000000000','ivanov@mail.ru');
+</code></pre>
+<img class="img-fluid" src="http://i.yapx.ru/BX2aA.png" alt="">
+<img class="img-fluid" src="http://i.yapx.ru/BX2c2.png" alt="">
+		</section>
+		
+		<p>Создадим процедуру для удаления клиента по ID с выходным параметром OUT в который запишем количество оставшихся после удаления клиентов</p>
+				<pre class="border border-success"><code class="SQL">DELIMITER $$ ;
+CREATE PROCEDURE sp_delete_customer(IN idcust INT, OUT varbl int)
+BEGIN
+	DELETE FROM customers
+       WHERE idcustomers = idcust;
+	SELECT * FROM customers
+	ORDER BY last_name;
+	SELECT COUNT(*) INTO varbl
+	FROM customers;
+END $$
+DELIMITER ; $$
+-- В переменную @count запишется количество наших клиентов
+CALL sp_delete_customer(28, @count);
+</code></pre>	
+<img class="img-fluid" src="http://i.yapx.ru/BX2qB.png" alt="">
 	</div>
-
-
 	<script src="highlight.pack.js"></script>
 	<script>
 		hljs.initHighlightingOnLoad();
-
 	</script>
 </body>
 
