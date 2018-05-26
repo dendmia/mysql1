@@ -30,6 +30,7 @@
 			<a class="nav-link" href="#task5">Задание 5 </a>
 			<a class="nav-link" href="#task6">Задание 6 VIEW</a>
 			<a class="nav-link" href="#task7">Задание 7 </a>
+			<a class="nav-link" href="#task8">Задание 8 </a>
 		</div>
 		<a href=""></a>
 		<section>
@@ -543,8 +544,7 @@ END $$
 DELIMITER ; $$
 </code></pre>
 			<img class="img-fluid" src="http://i.yapx.ru/BXk72.png" alt="">
-<p>В хранимую процедуру можно передать параметры. Пареметры бывают трех видов IN(входной, который нужно передать при вызове, именно IN подразумевается по умолчанию), 
-OUT(это выходной параметр, в него будет производиться запись, это переменная), NOW. Создадим процедуру добавляющую нового клиента с параметрами обязательными для указания(имя, фамилия, телефон, почта) и показывающую таблицу с новым клиентом. Причем локальные переменные в пареметрах обозначаются без @, и это особенность исключительно MYSQL!  </p>
+			<p>В хранимую процедуру можно передать параметры. Пареметры бывают трех видов IN(входной, который нужно передать при вызове, именно IN подразумевается по умолчанию), OUT(это выходной параметр, в него будет производиться запись, это переменная), NOW. Создадим процедуру добавляющую нового клиента с параметрами обязательными для указания(имя, фамилия, телефон, почта) и показывающую таблицу с новым клиентом. Причем локальные переменные в пареметрах обозначаются без @, и это особенность исключительно MYSQL! </p>
 			<pre class="border border-success"><code class="SQL">DELIMITER $$ ;
 CREATE PROCEDURE sp_add_new_customer(IN first_n VARCHAR(33),IN last_n VARCHAR(33), phone_num CHAR(10), mail VARCHAR(45))
 BEGIN
@@ -556,26 +556,76 @@ DELIMITER ; $$
 
 CALL sp_add_new_customer('Иванов','Иван','0000000000','ivanov@mail.ru');
 </code></pre>
-<img class="img-fluid" src="http://i.yapx.ru/BX2aA.png" alt="">
-<img class="img-fluid" src="http://i.yapx.ru/BX2c2.png" alt="">
+			<img class="img-fluid" src="http://i.yapx.ru/BX2aA.png" alt="">
+			<img class="img-fluid" src="http://i.yapx.ru/BX2c2.png" alt="">
 		</section>
+
+		<section>
+
+			<p>Создадим процедуру для удаления клиента по ID с выходным параметром OUT в который запишем количество оставшихся после удаления клиентов</p>
+			<pre class="border border-success"><code class="SQL">DELIMITER $$ ;
+			CREATE PROCEDURE sp_delete_customer(IN idcust INT, OUT varbl int)
+			BEGIN
+				DELETE FROM customers
+			       WHERE idcustomers = idcust;
+				SELECT * FROM customers
+				ORDER BY last_name;
+				SELECT COUNT(*) INTO varbl
+				FROM customers;
+			END $$
+			DELIMITER ; $$
+			-- В переменную @count запишется количество наших клиентов
+			CALL sp_delete_customer(28, @count);
+			</code></pre>
+			<img class="img-fluid" src="http://i.yapx.ru/BX2qB.png" alt="">
+		</section>
+		<section>
+			<h2 class="mt-5" id="task8">Задание 8</h2>
+			<p>Настройте работу по созданию резервных копий вашей БД: через события и select, через mysqldump.</p>
+			<p>Создадим событие backup_db которое будет выполнять резервное копирование </p>
+			<p>Событие выполняется по расписанию, его инициирует сам сервер базы данных.</p>
+			<p>События поддерживаются начиная с версии mysql 5.1</p>
+			<p>Проверяем куда можно сохранять</p>
+
+			<pre class="border border-success"><code class="SQL">SHOW VARIABLES LIKE "secure_file_priv";
+</code></pre>
+			<img class="img-fluid" src="http://i.yapx.ru/BaVGF.png" alt="">
+			<p>Создаем хранимую процедуру сохранения таблиц в файлы</p>
+			<pre class="border border-success"><code class="SQL">DELIMITER $$ ;	
+DROP PROCEDURE IF EXISTS copy_tables; 		
+CREATE PROCEDURE copy_tables()
+	BEGIN
+		SELECT * INTO OUTFILE 'C:\ProgramData\MySQL\MySQL Server 5.7\Uploads\customers.txt' FROM customers;
+		SELECT * INTO OUTFILE 'C:\ProgramData\MySQL\MySQL Server 5.7\Uploads\differentroomsaparts.txt'FROM differentroomsaparts;
+		SELECT * INTO OUTFILE 'C:\ProgramData\MySQL\MySQL Server 5.7\Uploads\estate_objects.txt' FROM estate_objects;
+		SELECT * INTO OUTFILE 'C:\ProgramData\MySQL\MySQL Server 5.7\Uploads\landlords.txt' FROM landlords;
+		SELECT * INTO OUTFILE 'C:\ProgramData\MySQL\MySQL Server 5.7\Uploads\objectaddress.txt' FROM objectaddress;
+		SELECT * INTO OUTFILE 'C:\ProgramData\MySQL\MySQL Server 5.7\Uploads\objectcity.txt' FROM objectcity;
+		SELECT * INTO OUTFILE 'C:\ProgramData\MySQL\MySQL Server 5.7\Uploads\objectpostindex.txt' FROM objectpostindex;
+		SELECT * INTO OUTFILE 'C:\ProgramData\MySQL\MySQL Server 5.7\Uploads\objecttype.txt' FROM objecttype;
+		SELECT * INTO OUTFILE 'C:\ProgramData\MySQL\MySQL Server 5.7\Uploads\threeroomsaparts.txt' FROM threeroomsaparts;
+	END $$
+	DELIMITER ; $$</code></pre>
+			<img class="img-fluid" src="http://i.yapx.ru/BaVHB.png" alt="">
+			<p>Создаем событие которое будет происходить еженедельно и будет сохранять таблицы в файлы процедурой copy_tables</p>
+			<pre class="border border-success"><code class="SQL">
+	CREATE EVENT `backup_db`
+	ON SCHEDULE 
+	EVERY 1 WEEK STARTS CURRENT_TIMESTAMP
+	DO
+	CALL copy_tables();
+</code></pre>
+<img class="img-fluid" src="http://i.yapx.ru/BaVQY.png" alt="">
+
 		
-		<p>Создадим процедуру для удаления клиента по ID с выходным параметром OUT в который запишем количество оставшихся после удаления клиентов</p>
-				<pre class="border border-success"><code class="SQL">DELIMITER $$ ;
-CREATE PROCEDURE sp_delete_customer(IN idcust INT, OUT varbl int)
-BEGIN
-	DELETE FROM customers
-       WHERE idcustomers = idcust;
-	SELECT * FROM customers
-	ORDER BY last_name;
-	SELECT COUNT(*) INTO varbl
-	FROM customers;
-END $$
-DELIMITER ; $$
--- В переменную @count запишется количество наших клиентов
-CALL sp_delete_customer(28, @count);
-</code></pre>	
-<img class="img-fluid" src="http://i.yapx.ru/BX2qB.png" alt="">
+			<p>Утилита mysqldump позволяет сделать как бы моментальный снимок содержимого базы данных, таблиц или нескольких баз и экспортировать его в файл .sql который будет содержать набор команд для создания и заполения таблиц. </p>
+			<pre class="border border-success"><code class="SQL">			
+	mysqldump mydb > 'C:\ProgramData\MySQL\MySQL Server 5.7\Uploads\backup_mydb.sql';
+	
+	mysqldump -u root -ppassword mydb > 'C:\ProgramData\MySQL\MySQL Server 5.7\Uploads\backup_mydb.sql';
+</code></pre>
+			<img class="img-fluid" src="#" alt="">
+		</section>
 	</div>
 	<script src="highlight.pack.js"></script>
 	<script>
