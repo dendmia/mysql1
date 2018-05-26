@@ -619,12 +619,14 @@ CREATE PROCEDURE copy_tables()
 
 		
 			<p>Утилита mysqldump позволяет сделать как бы моментальный снимок содержимого базы данных, таблиц или нескольких баз и экспортировать его в файл .sql который будет содержать набор команд для создания и заполения таблиц. </p>
+			<p>
+				Это не команда mysql, а отдельная программа и вызывать её нужно напрямую из консоли с указанием имени пользователя, а затем когда спросят пароля
+				<b>Кавычки в имени файла и ; - в конце не ставится. Пробелов в адресе тоже быть не должно</b>
+			</p>
 			<pre class="border border-success"><code class="SQL">			
-	mysqldump mydb > 'C:\ProgramData\MySQL\MySQL Server 5.7\Uploads\backup_mydb.sql';
-	
-	mysqldump -u root -ppassword mydb > 'C:\ProgramData\MySQL\MySQL Server 5.7\Uploads\backup_mydb.sql';
+	mysqldump -u root -p mydb > C:\Users\Dzimmo\backup_mydb.sql
 </code></pre>
-			<img class="img-fluid" src="#" alt="">
+			<img class="img-fluid" src="http://i.yapx.ru/BaVga.png" alt="">
 		</section>
 	</div>
 	<script src="highlight.pack.js"></script>
