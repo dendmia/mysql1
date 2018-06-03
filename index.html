@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="styles/default.css">
 	<style>
 		p {
-			padding-top: 2.5em;
+			padding-top: 1em;
 		}
 
 		h4 {
@@ -20,7 +20,7 @@
 
 <body>
 	<div class="container">
-		<div class="nav flex-column nav-pills fixed-top" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+		<div style="width: 200px;" class="nav flex-column nav-pills fixed-top" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 			<a class="nav-link" href="#task1">Задание 1 CREAT</a>
 			<a class="nav-link" href="#task2">Задание 2 INSERT</a>
 			<a class="nav-link" href="#task3.1">Задание 3.1 SELECT</a>
@@ -31,6 +31,7 @@
 			<a class="nav-link" href="#task6">Задание 6 VIEW</a>
 			<a class="nav-link" href="#task7">Задание 7 </a>
 			<a class="nav-link" href="#task8">Задание 8 </a>
+			<a class="nav-link" href="#task9">Задание 8 Partitioning</a>
 		</div>
 		<a href=""></a>
 		<section>
@@ -627,6 +628,40 @@ CREATE PROCEDURE copy_tables()
 	mysqldump -u root -p mydb > C:\Users\Dzimmo\backup_mydb.sql
 </code></pre>
 			<img class="img-fluid" src="http://i.yapx.ru/BaVga.png" alt="">
+		</section>
+		<section>
+		<h2 class="mt-5" id="task9">Задание 9.</h2>
+			<p> Настроить Range парционирование (Partitioning) на таблице с недвижимостью.</p>
+			<p>
+				Партиционирование (<b>partitioning</b>) — это разбиение больших таблиц на логические части по выбранным критериям.
+			</p>
+			<p>
+				<b>RANGE partitioning</b>: назначает строки разделам, основанным на значениях столбца, попадающих внутрь заданного диапазона.
+			</p>
+			<p>
+				Разобьем таблицу на сектора по первичному ключу `idreal estate_objects`, обратные кавычки используем т.к. название столбца содержит пробел
+			</p>
+				<pre class="border border-success"><code class="SQL">
+ALTER TABLE estate_objects PARTITION BY RANGE (`idreal estate_objects`) 
+                 (PARTITION p0 VALUES LESS THAN (4),
+                  PARTITION p1 VALUES LESS THAN (6),
+                  PARTITION p2 VALUES LESS THAN (9),
+                  PARTITION p3 VALUES LESS THAN (10));				
+				</code></pre>
+				<img class="img-fluid" src="http://i.yapx.ru/BeE5R.png" alt="">
+				<p>С помощью оператора <b>EXPLAIN</b> проверим работает ли партиционирование </p>
+<pre class="border border-success"><code class="SQL">
+EXPLAIN SELECT * FROM estate_objects
+WHERE `idreal estate_objects` = 5;
+
+</code></pre>
+			<img class="img-fluid" src="http://i.yapx.ru/BeFJC.png" alt="">
+			<p>
+				Оператор <b>EXPLAIN</b> показал, что при выполнении запроса использовалась не вся таблица, а только партиция p1, это означает что выполнение запросов значительно ускорилось. 
+			</p>
+			<p style="margin-bottom: 100px;">Особенно это заметно на больших таблицах.
+				Кроме того партиция с "оперативными" данными (т.е. последними, по которым наиболее часто происходит выборка) имеют минимальный размер, и как следствие, могут постоянно находится в оперативной памяти.</p>
+
 		</section>
 	</div>
 	<script src="highlight.pack.js"></script>
